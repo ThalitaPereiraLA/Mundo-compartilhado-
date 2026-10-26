@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#18162a" />
+    <meta
+      name="description"
+      content="Um gato 3D em um observatório aconchegante, com três animações criadas por código."
+    />
+    <title>Observatório Felino</title>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+    <link rel="stylesheet" href="./styles.css" />
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js",
+          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <main class="experience">
+      <canvas id="scene" aria-label="Gato 3D em um observatório ao entardecer"></canvas>
+
+      <div class="grain" aria-hidden="true"></div>
+
+      <header class="topbar">
+        <a class="brand" href="#inicio" aria-label="Observatório Felino — início">
+          <span class="brand-mark" aria-hidden="true">✦</span>
+          <span>Observatório Felino</span>
+        </a>
+        <p class="scene-status"><span></span> experiência 3D ao vivo</p>
+      </header>
+
+      <section class="intro" id="inicio" aria-labelledby="title">
+        <p class="eyebrow">UM PEQUENO MUNDO PARA UM GRANDE CURIOSO</p>
+        <h1 id="title">Encontre o gato<br />entre as estrelas.</h1>
+        <p class="lede">
+          Três humores, um observatório acolhedor e toda a curiosidade da noite.
+          Arraste para explorar o espaço.
+        </p>
+      </section>
+
+      <aside class="controls" aria-label="Escolha uma animação">
+        <div class="controls-heading">
+          <div>
+            <p class="eyebrow">MOVIMENTOS</p>
+            <h2>Como ele está hoje?</h2>
+          </div>
+          <span class="shortcut">1—3</span>
+        </div>
+
+        <div class="animation-list" role="group" aria-label="Animações do gato">
+          <button class="animation-button is-active" type="button" data-animation="curious" aria-pressed="true">
+            <span class="number">01</span>
+            <span class="button-copy"><strong>Curioso</strong><small>Olha, inclina e investiga</small></span>
+            <span class="arrow" aria-hidden="true">↗</span>
+          </button>
+          <button class="animation-button" type="button" data-animation="jump" aria-pressed="false">
+            <span class="number">02</span>
+            <span class="button-copy"><strong>Pulo</strong><small>Agacha e alcança a lua</small></span>
+            <span class="arrow" aria-hidden="true">↗</span>
+          </button>
+          <button class="animation-button" type="button" data-animation="purr" aria-pressed="false">
+            <span class="number">03</span>
+            <span class="button-copy"><strong>Ronronar</strong><small>Respira e relaxa devagar</small></span>
+            <span class="arrow" aria-hidden="true">↗</span>
+          </button>
+        </div>
+      </aside>
+
+      <div class="hint" aria-hidden="true">
+        <span class="mouse"><i></i></span>
+        arraste para orbitar
+      </div>
+
+      <div class="loading" id="loading" role="status" aria-live="polite">
+        <div class="loading-ring"></div>
+        <p>Preparando o observatório…</p>
+      </div>
+
+      <footer>
+        Modelo “Cat by Sumpitueslag” por
+        <a href="https://sketchfab.com/Professor_E12" target="_blank" rel="noreferrer">photon (that one larry)</a>,
+        licenciado sob
+        <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noreferrer">CC BY 4.0</a>.
+      </footer>
+    </main>
+
+    <noscript>Ative o JavaScript para visualizar a experiência 3D.</noscript>
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
