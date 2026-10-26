@@ -72,26 +72,7 @@ a { color: inherit; }
 .scene-status { margin: 0; color: var(--muted); font: 10px/1 "DM Mono", monospace; letter-spacing: 0.12em; text-transform: uppercase; }
 .scene-status span { display: inline-block; width: 6px; height: 6px; margin-right: 8px; border-radius: 50%; background: #9edb97; box-shadow: 0 0 12px #9edb97; }
 
-.intro {
-  position: absolute;
-  z-index: 2;
-  top: 18%;
-  left: 42px;
-  width: min(420px, 34vw);
-  pointer-events: none;
-}
-
 .eyebrow { margin: 0 0 16px; color: var(--amber); font: 500 10px/1.4 "DM Mono", monospace; letter-spacing: 0.17em; }
-
-h1 {
-  margin: 0;
-  font-size: clamp(44px, 5.4vw, 82px);
-  font-weight: 400;
-  line-height: 0.96;
-  letter-spacing: -0.055em;
-}
-
-.lede { max-width: 360px; margin: 24px 0 0; color: var(--muted); font-size: 14px; line-height: 1.7; }
 
 .controls {
   position: absolute;
@@ -162,9 +143,6 @@ noscript { position: fixed; z-index: 20; inset: 0; display: grid; place-items: c
   .experience { min-height: 700px; }
   .topbar { padding: 22px 24px; }
   .scene-status { display: none; }
-  .intro { top: 110px; left: 24px; width: calc(100% - 48px); }
-  h1 { font-size: clamp(39px, 10.4vw, 56px); }
-  .lede { max-width: 310px; margin-top: 15px; }
   .controls { right: 16px; bottom: 48px; left: 16px; width: auto; padding: 13px 16px; }
   .controls-heading { padding-bottom: 10px; }
   .animation-list { display: grid; grid-template-columns: repeat(3, 1fr); }
@@ -179,7 +157,6 @@ noscript { position: fixed; z-index: 20; inset: 0; display: grid; place-items: c
 }
 
 @media (max-height: 720px) and (min-width: 901px) {
-  .intro { top: 17%; }
   .controls { bottom: 40px; }
   footer { display: none; }
 }
