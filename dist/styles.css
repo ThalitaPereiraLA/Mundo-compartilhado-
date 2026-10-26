@@ -163,7 +163,7 @@ noscript { position: fixed; z-index: 20; inset: 0; display: grid; place-items: c
   .topbar { padding: 22px 24px; }
   .scene-status { display: none; }
   .intro { top: 110px; left: 24px; width: calc(100% - 48px); }
-  h1 { font-size: clamp(42px, 12vw, 64px); }
+  h1 { font-size: clamp(39px, 10.4vw, 56px); }
   .lede { max-width: 310px; margin-top: 15px; }
   .controls { right: 16px; bottom: 48px; left: 16px; width: auto; padding: 13px 16px; }
   .controls-heading { padding-bottom: 10px; }

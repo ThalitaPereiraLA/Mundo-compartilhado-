@@ -254,6 +254,10 @@ window.addEventListener("keydown", (event) => {
   if (map[event.key]) chooseAnimation(map[event.key]);
 });
 
+// Também facilita direção de arte e testes: ?animation=jump ou ?animation=purr.
+const requestedAnimation = new URLSearchParams(window.location.search).get("animation");
+if (["curious", "jump", "purr"].includes(requestedAnimation)) chooseAnimation(requestedAnimation);
+
 const loader = new GLTFLoader();
 loader.load(
   "./assets/cat.glb",
