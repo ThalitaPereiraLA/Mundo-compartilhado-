@@ -3,13 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#18162a" />
-    <meta
-      name="description"
-      content="Um gato 3D em um observatório aconchegante, com três animações criadas por código."
-    />
-    <title>Observatório Felino</title>
+    <meta name="theme-color" content="#12111f" />
+    <meta name="description" content="Um café de gatos 3D interativo com três personagens e nove interações." />
+    <title>Café Lunar dos Gatos</title>
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="stylesheet" href="./styles.css" />
     <script type="importmap">
       {
@@ -21,66 +19,96 @@
     </script>
   </head>
   <body>
-    <main class="experience">
-      <canvas id="scene" aria-label="Gato 3D em um observatório ao entardecer"></canvas>
-
+    <main class="game-shell">
+      <canvas id="scene" aria-label="Café de gatos 3D interativo"></canvas>
       <div class="grain" aria-hidden="true"></div>
 
-      <header class="topbar">
-        <a class="brand" href="#" aria-label="Observatório Felino — início">
+      <header class="game-topbar">
+        <div class="brand" aria-label="Café Lunar dos Gatos">
           <span class="brand-mark" aria-hidden="true">✦</span>
-          <span>Observatório Felino</span>
-        </a>
-        <p class="scene-status"><span></span> experiência 3D ao vivo</p>
+          <span><strong>Café Lunar</strong><small>dos gatos</small></span>
+        </div>
+
+        <div class="game-progress" aria-label="Progresso do jogo">
+          <div class="progress-stat"><span>Gatos no café</span><strong><b id="catCount">1</b>/3</strong></div>
+          <div class="progress-divider"></div>
+          <div class="progress-stat"><span>Interações</span><strong><b id="interactionCount">0</b>/9</strong></div>
+          <div class="progress-track" aria-hidden="true"><i id="progressFill"></i></div>
+        </div>
+
+        <button class="icon-button" id="helpButton" type="button" aria-label="Como jogar">?</button>
       </header>
 
-      <aside class="controls" aria-label="Escolha uma animação">
-        <div class="controls-heading">
-          <div>
-            <p class="eyebrow">MOVIMENTOS</p>
-            <h2>Como ele está hoje?</h2>
-          </div>
-          <span class="shortcut">1—3</span>
-        </div>
-
-        <div class="animation-list" role="group" aria-label="Animações do gato">
-          <button class="animation-button is-active" type="button" data-animation="curious" aria-pressed="true">
-            <span class="number">01</span>
-            <span class="button-copy"><strong>Curioso</strong><small>Olha, inclina e investiga</small></span>
-            <span class="arrow" aria-hidden="true">↗</span>
-          </button>
-          <button class="animation-button" type="button" data-animation="jump" aria-pressed="false">
-            <span class="number">02</span>
-            <span class="button-copy"><strong>Pulo</strong><small>Agacha e alcança a lua</small></span>
-            <span class="arrow" aria-hidden="true">↗</span>
-          </button>
-          <button class="animation-button" type="button" data-animation="purr" aria-pressed="false">
-            <span class="number">03</span>
-            <span class="button-copy"><strong>Ronronar</strong><small>Respira e relaxa devagar</small></span>
-            <span class="arrow" aria-hidden="true">↗</span>
-          </button>
-        </div>
+      <aside class="mission-card game-panel">
+        <p class="kicker"><span></span> MISSÃO DO TURNO</p>
+        <h1>Faça amizade com todos os gatos</h1>
+        <p>Clique em um gato e descubra suas três reações.</p>
       </aside>
 
-      <div class="hint" aria-hidden="true">
-        <span class="mouse"><i></i></span>
-        arraste para orbitar
+      <aside class="cat-roster game-panel" aria-labelledby="rosterTitle">
+        <div class="panel-title">
+          <div><p class="kicker">MORADORES</p><h2 id="rosterTitle">Quem está no café</h2></div>
+          <span class="online-dot" title="Cena ativa"></span>
+        </div>
+        <div class="roster-list" id="catRoster"></div>
+      </aside>
+
+      <div class="interaction-prompt" id="interactionPrompt" aria-live="polite">
+        <span class="prompt-key">CLICK</span><span>Escolha a Luna para interagir</span>
       </div>
+
+      <section class="action-dock game-panel" id="actionDock" aria-labelledby="actionTitle">
+        <div class="action-heading">
+          <div><p class="kicker">INTERAGIR COM</p><h2 id="actionTitle">Luna</h2></div>
+          <span class="friendship-badge"><i>♡</i> amizade</span>
+        </div>
+        <div class="action-list" id="actionList" role="group" aria-label="Ações do gato"></div>
+        <p class="keyboard-hint">Use <kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd> ou clique em uma ação</p>
+      </section>
+
+      <div class="toast" id="toast" role="status" aria-live="polite"><span>♡</span><p></p></div>
 
       <div class="loading" id="loading" role="status" aria-live="polite">
-        <div class="loading-ring"></div>
-        <p>Preparando o observatório…</p>
+        <div class="loading-ring"></div><p>Preparando o café…</p>
       </div>
 
-      <footer>
+      <section class="start-screen" id="startScreen" aria-labelledby="startTitle">
+        <div class="start-orbit" aria-hidden="true"><i></i><b>✦</b></div>
+        <p class="kicker">SEU TURNO COMEÇOU</p>
+        <h2 id="startTitle">Bem-vindo ao<br />Café Lunar</h2>
+        <p>Conheça os gatos, experimente cada interação e complete o álbum de amizade.</p>
+        <div class="start-controls" aria-label="Controles">
+          <span><i>↔</i> Arraste para olhar</span>
+          <span><i>1–3</i> Escolha uma ação</span>
+          <span><i>?</i> Abra a ajuda</span>
+        </div>
+        <button class="primary-button" id="startButton" type="button" disabled>
+          <span>Carregando o café…</span><i aria-hidden="true">→</i>
+        </button>
+      </section>
+
+      <section class="help-modal" id="helpModal" role="dialog" aria-modal="true" aria-labelledby="helpTitle" hidden>
+        <div class="help-card game-panel">
+          <button class="close-button" id="closeHelp" type="button" aria-label="Fechar ajuda">×</button>
+          <p class="kicker">COMO JOGAR</p>
+          <h2 id="helpTitle">Um turno no Café Lunar</h2>
+          <ol>
+            <li><span>01</span><p><strong>Explore a cena</strong>Arraste para girar a câmera e use a roda para aproximar.</p></li>
+            <li><span>02</span><p><strong>Escolha um gato</strong>Clique no modelo 3D ou no cartão dele na lista de moradores.</p></li>
+            <li><span>03</span><p><strong>Crie amizade</strong>Faça as três interações de cada gato para completar o progresso.</p></li>
+          </ol>
+          <button class="secondary-button" id="understoodButton" type="button">Entendi</button>
+        </div>
+      </section>
+
+      <footer class="credits">
         Modelo “Cat by Sumpitueslag” por
         <a href="https://sketchfab.com/Professor_E12" target="_blank" rel="noreferrer">photon (that one larry)</a>,
-        licenciado sob
         <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noreferrer">CC BY 4.0</a>.
       </footer>
     </main>
 
-    <noscript>Ative o JavaScript para visualizar a experiência 3D.</noscript>
+    <noscript>Ative o JavaScript para jogar.</noscript>
     <script type="module" src="./app.js"></script>
   </body>
 </html>
