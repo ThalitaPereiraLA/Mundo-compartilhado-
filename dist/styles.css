@@ -75,7 +75,7 @@ a { color: inherit; }
 .brand-mark { color: var(--amber); font-size: 20px; filter: drop-shadow(0 0 10px rgba(255, 191, 105, .6)); }
 .brand > span:last-child { display: grid; }
 .brand strong { font-size: 14px; font-weight: 700; letter-spacing: -0.02em; }
-.brand small { color: var(--muted); font: 8px/1.4 "DM Mono", monospace; letter-spacing: .15em; text-transform: uppercase; }
+.brand small { color: var(--muted); font: 10px/1.4 "DM Mono", monospace; letter-spacing: .13em; text-transform: uppercase; }
 
 .game-progress {
   position: relative;
@@ -87,8 +87,8 @@ a { color: inherit; }
   padding: 0 4px 12px;
 }
 .progress-stat { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; }
-.progress-stat span { color: var(--muted); font: 9px/1 "DM Mono", monospace; letter-spacing: .08em; text-transform: uppercase; }
-.progress-stat strong { font: 500 14px/1 "DM Mono", monospace; }
+.progress-stat span { color: var(--muted); font: 11px/1 "DM Mono", monospace; letter-spacing: .06em; text-transform: uppercase; }
+.progress-stat strong { font: 500 16px/1 "DM Mono", monospace; }
 .progress-stat b { color: var(--amber); font-weight: 500; }
 .progress-divider { width: 1px; height: 20px; background: var(--line); }
 .progress-track { position: absolute; right: 4px; bottom: 0; left: 4px; height: 2px; overflow: hidden; background: rgba(255,255,255,.09); }
@@ -107,7 +107,7 @@ a { color: inherit; }
 }
 .icon-button:hover, .close-button:hover { border-color: var(--amber); background: rgba(255,191,105,.09); transform: translateY(-1px); }
 
-.kicker { margin: 0 0 9px; color: var(--amber); font: 500 9px/1.4 "DM Mono", monospace; letter-spacing: .16em; }
+.kicker { margin: 0 0 9px; color: var(--amber); font: 500 12px/1.4 "DM Mono", monospace; letter-spacing: .12em; }
 .kicker > span { display: inline-block; width: 5px; height: 5px; margin: 0 7px 1px 0; border-radius: 50%; background: var(--mint); box-shadow: 0 0 9px var(--mint); }
 
 .mission-card {
@@ -115,25 +115,25 @@ a { color: inherit; }
   z-index: 3;
   top: 106px;
   left: 32px;
-  width: 260px;
+  width: 290px;
   padding: 18px 20px;
   border-radius: 15px;
 }
-.mission-card h1 { margin: 0; font-size: 16px; line-height: 1.25; letter-spacing: -.025em; }
-.mission-card > p:last-child { margin: 8px 0 0; color: var(--muted); font-size: 11px; line-height: 1.55; }
+.mission-card h1 { margin: 0; font-size: 19px; line-height: 1.25; letter-spacing: -.025em; }
+.mission-card > p:last-child { margin: 8px 0 0; color: var(--muted); font-size: 14px; line-height: 1.55; }
 
 .cat-roster {
   position: absolute;
   z-index: 4;
   top: 106px;
   right: 32px;
-  width: 270px;
+  width: 300px;
   padding: 17px;
   border-radius: 17px;
 }
 .panel-title { display: flex; align-items: flex-start; justify-content: space-between; padding: 1px 3px 13px; border-bottom: 1px solid var(--line); }
 .panel-title .kicker { margin-bottom: 4px; }
-.panel-title h2, .action-heading h2 { margin: 0; font-size: 14px; font-weight: 600; }
+.panel-title h2, .action-heading h2 { margin: 0; font-size: 16px; font-weight: 600; }
 .online-dot { width: 7px; height: 7px; margin-top: 5px; border-radius: 50%; background: var(--mint); box-shadow: 0 0 10px var(--mint); }
 .roster-list { display: grid; gap: 5px; padding-top: 8px; }
 
@@ -142,7 +142,7 @@ a { color: inherit; }
   grid-template-columns: 34px 1fr auto;
   align-items: center;
   gap: 10px;
-  min-height: 49px;
+  min-height: 55px;
   width: 100%;
   padding: 7px 8px;
   border: 1px solid transparent;
@@ -157,9 +157,9 @@ a { color: inherit; }
 .roster-item:disabled { cursor: default; opacity: .48; }
 .cat-avatar { display: grid; place-items: center; width: 34px; height: 34px; border: 1px solid var(--line); border-radius: 10px; color: var(--accent, var(--amber)); background: rgba(255,255,255,.04); font-size: 16px; }
 .roster-copy { display: grid; gap: 3px; }
-.roster-copy strong { font-size: 11px; font-weight: 600; }
-.roster-copy small { font: 8px/1 "DM Mono", monospace; letter-spacing: .05em; text-transform: uppercase; }
-.roster-status { color: var(--mint); font: 8px/1 "DM Mono", monospace; }
+.roster-copy strong { font-size: 14px; font-weight: 600; }
+.roster-copy small { font: 11px/1 "DM Mono", monospace; letter-spacing: .04em; text-transform: uppercase; }
+.roster-status { color: var(--mint); font: 10px/1 "DM Mono", monospace; }
 .roster-item:disabled .roster-status { color: var(--muted); }
 
 .interaction-prompt {
@@ -175,26 +175,26 @@ a { color: inherit; }
   border-radius: 9px;
   color: var(--muted);
   background: rgba(12,11,22,.7);
-  font-size: 9px;
+  font-size: 12px;
   transform: translate(-50%, -50%);
   pointer-events: none;
   transition: opacity .25s, transform .25s;
 }
-.prompt-key { padding: 5px 6px; border-radius: 5px; color: var(--night); background: var(--amber); font: 600 7px/1 "DM Mono", monospace; }
+.prompt-key { padding: 5px 6px; border-radius: 5px; color: var(--night); background: var(--amber); font: 600 9px/1 "DM Mono", monospace; }
 
 .action-dock {
   position: absolute;
   z-index: 4;
   left: 50%;
   bottom: 28px;
-  width: min(620px, calc(100vw - 64px));
+  width: min(700px, calc(100vw - 64px));
   padding: 15px 17px 11px;
   border-radius: 18px;
   transform: translateX(-50%);
 }
 .action-heading { display: flex; align-items: center; justify-content: space-between; padding: 0 3px 11px; }
 .action-heading .kicker { margin-bottom: 3px; }
-.friendship-badge { display: flex; align-items: center; gap: 6px; color: var(--muted); font: 8px/1 "DM Mono", monospace; letter-spacing: .06em; text-transform: uppercase; }
+.friendship-badge { display: flex; align-items: center; gap: 6px; color: var(--muted); font: 10px/1 "DM Mono", monospace; letter-spacing: .05em; text-transform: uppercase; }
 .friendship-badge i { color: var(--amber); font: normal 15px/1 sans-serif; }
 .action-list { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
 .action-button {
@@ -203,7 +203,7 @@ a { color: inherit; }
   grid-template-columns: 34px 1fr auto;
   align-items: center;
   gap: 9px;
-  min-height: 57px;
+  min-height: 64px;
   padding: 8px 9px;
   border: 1px solid var(--line);
   border-radius: 11px;
@@ -214,13 +214,13 @@ a { color: inherit; }
   transition: color .2s, border-color .2s, background .2s, transform .2s;
 }
 .action-button:hover, .action-button:focus-visible { color: var(--ink); border-color: rgba(255,191,105,.6); background: rgba(255,191,105,.075); outline: none; transform: translateY(-2px); }
-.action-button.is-complete::after { content: "✓"; position: absolute; top: 5px; right: 6px; color: var(--mint); font: 8px/1 "DM Mono", monospace; }
+.action-button.is-complete::after { content: "✓"; position: absolute; top: 5px; right: 6px; color: var(--mint); font: 10px/1 "DM Mono", monospace; }
 .action-icon { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 9px; color: var(--amber); background: rgba(255,191,105,.1); font-size: 15px; }
 .action-copy { display: grid; gap: 3px; min-width: 0; }
-.action-copy strong { color: inherit; font-size: 10px; font-weight: 600; white-space: nowrap; }
-.action-copy small { overflow: hidden; color: var(--muted); font-size: 8px; text-overflow: ellipsis; white-space: nowrap; }
-.action-key { align-self: end; color: rgba(255,255,255,.35); font: 8px/1 "DM Mono", monospace; }
-.keyboard-hint { margin: 9px 2px 0; color: rgba(255,255,255,.32); font: 8px/1 "DM Mono", monospace; text-align: center; }
+.action-copy strong { color: inherit; font-size: 14px; font-weight: 600; white-space: nowrap; }
+.action-copy small { overflow: hidden; color: var(--muted); font-size: 11px; text-overflow: ellipsis; white-space: nowrap; }
+.action-key { align-self: end; color: rgba(255,255,255,.35); font: 9px/1 "DM Mono", monospace; }
+.keyboard-hint { margin: 9px 2px 0; color: rgba(255,255,255,.42); font: 11px/1 "DM Mono", monospace; text-align: center; }
 kbd { padding: 2px 4px; border: 1px solid var(--line); border-radius: 3px; color: var(--muted); background: rgba(255,255,255,.04); font: inherit; }
 
 .toast {
@@ -244,7 +244,7 @@ kbd { padding: 2px 4px; border: 1px solid var(--line); border-radius: 3px; color
 }
 .toast.is-visible { opacity: 1; transform: translate(-50%, 0); }
 .toast span { color: var(--mint); font-size: 17px; }
-.toast p { margin: 0; color: #dff8eb; font-size: 10px; }
+.toast p { margin: 0; color: #dff8eb; font-size: 12px; }
 
 .loading {
   position: absolute;
@@ -258,7 +258,7 @@ kbd { padding: 2px 4px; border: 1px solid var(--line); border-radius: 3px; color
   transition: opacity .4s, visibility .4s;
 }
 .loading.is-hidden { opacity: 0; visibility: hidden; pointer-events: none; }
-.loading p { margin: 0; color: var(--muted); font: 9px/1 "DM Mono", monospace; letter-spacing: .13em; text-transform: uppercase; }
+.loading p { margin: 0; color: var(--muted); font: 11px/1 "DM Mono", monospace; letter-spacing: .12em; text-transform: uppercase; }
 .loading-ring { width: 40px; height: 40px; border: 1px solid var(--line); border-top-color: var(--amber); border-radius: 50%; animation: spin .8s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
@@ -277,7 +277,7 @@ kbd { padding: 2px 4px; border: 1px solid var(--line); border-radius: 3px; color
 .start-screen.is-hidden { opacity: 0; visibility: hidden; pointer-events: none; }
 .start-screen .kicker { margin-top: 24px; }
 .start-screen h2 { margin: 0; font-size: clamp(42px, 6vw, 72px); font-weight: 500; line-height: .95; letter-spacing: -.055em; }
-.start-screen > p:not(.kicker) { max-width: 440px; margin: 20px 0 0; color: var(--muted); font-size: 13px; line-height: 1.65; }
+.start-screen > p:not(.kicker) { max-width: 480px; margin: 20px 0 0; color: var(--muted); font-size: 15px; line-height: 1.65; }
 .start-orbit { position: relative; display: grid; place-items: center; width: 82px; height: 82px; border: 1px solid rgba(255,191,105,.32); border-radius: 50%; }
 .start-orbit::before, .start-orbit::after { content: ""; position: absolute; border: 1px solid rgba(143,131,219,.22); border-radius: 50%; }
 .start-orbit::before { inset: -9px; }
@@ -285,11 +285,11 @@ kbd { padding: 2px 4px; border: 1px solid var(--line); border-radius: 3px; color
 .start-orbit i { position: absolute; top: -4px; width: 8px; height: 8px; border-radius: 50%; background: var(--amber); box-shadow: 0 0 12px var(--amber); animation: orbit 3s linear infinite; transform-origin: 4px 45px; }
 .start-orbit b { color: var(--amber); font-size: 26px; }
 @keyframes orbit { to { transform: rotate(360deg); } }
-.start-controls { display: flex; gap: 20px; margin: 26px 0 22px; padding: 15px 20px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); color: var(--muted); font: 8px/1 "DM Mono", monospace; text-transform: uppercase; }
+.start-controls { display: flex; gap: 20px; margin: 26px 0 22px; padding: 15px 20px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); color: var(--muted); font: 10px/1 "DM Mono", monospace; text-transform: uppercase; }
 .start-controls span { display: flex; align-items: center; gap: 7px; }
 .start-controls i { display: grid; place-items: center; min-width: 24px; height: 24px; padding: 0 5px; border: 1px solid var(--line); border-radius: 5px; color: var(--ink); font-style: normal; }
 .primary-button, .secondary-button { border: 0; border-radius: 10px; color: #1c1520; background: var(--amber); font-weight: 700; cursor: pointer; }
-.primary-button { display: flex; align-items: center; justify-content: space-between; gap: 38px; min-width: 240px; padding: 14px 16px 14px 19px; font-size: 11px; box-shadow: 0 12px 35px rgba(255,191,105,.2); transition: transform .2s, box-shadow .2s; }
+.primary-button { display: flex; align-items: center; justify-content: space-between; gap: 38px; min-width: 260px; padding: 14px 16px 14px 19px; font-size: 13px; box-shadow: 0 12px 35px rgba(255,191,105,.2); transition: transform .2s, box-shadow .2s; }
 .primary-button:not(:disabled):hover { transform: translateY(-2px); box-shadow: 0 16px 45px rgba(255,191,105,.3); }
 .primary-button:disabled { opacity: .5; cursor: wait; }
 .primary-button i { font-style: normal; font-size: 17px; }
@@ -300,12 +300,12 @@ kbd { padding: 2px 4px; border: 1px solid var(--line); border-radius: 3px; color
 .help-card h2 { margin: 0 0 22px; font-size: 26px; letter-spacing: -.035em; }
 .help-card ol { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
 .help-card li { display: grid; grid-template-columns: 34px 1fr; gap: 12px; align-items: start; padding: 12px; border: 1px solid var(--line); border-radius: 11px; }
-.help-card li > span { color: var(--amber); font: 9px/1.8 "DM Mono", monospace; }
-.help-card li p { display: grid; gap: 4px; margin: 0; color: var(--muted); font-size: 10px; line-height: 1.5; }
-.help-card li strong { color: var(--ink); font-size: 12px; }
+.help-card li > span { color: var(--amber); font: 11px/1.8 "DM Mono", monospace; }
+.help-card li p { display: grid; gap: 4px; margin: 0; color: var(--muted); font-size: 12px; line-height: 1.5; }
+.help-card li strong { color: var(--ink); font-size: 14px; }
 .secondary-button { width: 100%; margin-top: 15px; padding: 12px; }
 
-.credits { position: absolute; z-index: 2; left: 32px; bottom: 18px; max-width: 340px; color: rgba(248,243,231,.26); font-size: 7px; }
+.credits { position: absolute; z-index: 2; left: 32px; bottom: 18px; max-width: 420px; color: rgba(248,243,231,.34); font-size: 9px; }
 .credits a:hover { color: var(--ink); }
 noscript { position: fixed; z-index: 100; inset: 0; display: grid; place-items: center; color: white; background: #11101d; }
 
@@ -316,7 +316,7 @@ noscript { position: fixed; z-index: 100; inset: 0; display: grid; place-items: 
   .game-progress .progress-stat { width: 100%; }
   .icon-button { grid-column: 2; grid-row: 1; }
   .mission-card { top: 122px; left: 16px; width: min(calc(100vw - 32px), 358px); padding: 13px 15px; }
-  .mission-card h1 { font-size: 13px; }
+  .mission-card h1 { font-size: 17px; }
   .mission-card > p:last-child { display: none; }
   .cat-roster { top: 211px; right: auto; left: 16px; width: min(calc(100vw - 32px), 358px); padding: 9px; }
   .panel-title h2, .panel-title .online-dot { display: none; }
@@ -325,15 +325,15 @@ noscript { position: fixed; z-index: 100; inset: 0; display: grid; place-items: 
   .roster-item { grid-template-columns: 28px 1fr; min-width: 0; min-height: 40px; padding: 5px; }
   .cat-avatar { width: 28px; height: 28px; }
   .roster-status { display: none; }
-  .roster-copy strong { font-size: 9px; }
-  .roster-copy small { font-size: 6px; }
+  .roster-copy strong { font-size: 12px; }
+  .roster-copy small { font-size: 9px; }
   .interaction-prompt { top: 50%; }
   .action-dock { right: auto; bottom: 12px; left: 10px; width: min(calc(100vw - 20px), 370px); padding: 12px 10px 9px; transform: none; }
   .action-list { gap: 5px; }
   .action-button { grid-template-columns: 1fr; justify-items: center; min-height: 58px; padding: 7px 4px; text-align: center; }
   .action-icon { width: 28px; height: 28px; }
   .action-copy small, .action-key, .keyboard-hint { display: none; }
-  .action-copy strong { font-size: 8px; }
+  .action-copy strong { font-size: 12px; }
   .credits { display: none; }
   .start-controls { display: grid; gap: 8px; width: min(280px, 100%); }
   .start-screen h2 { font-size: 46px; }
