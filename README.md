@@ -28,6 +28,10 @@ Depois abra `http://localhost:4173`.
 
 Essas animações são procedurais e movimentam diretamente o esqueleto do GLB.
 
+## Jarbas
+
+O segundo morador se chama Jarbas e usa o modelo “MacDonald”, de Kasugay (Sketchfab, CC BY 4.0). As animações Idle, Cambalhota, Morto e Passear movem o gato inteiro e ficam em `dist/macdonald-clips.js`. Idle fica em loop; as três interações do slot são Cambalhota, Fingir de morto e Passear.
+
 ## Estrutura
 
 - `dist/index.html`: HUD, tela inicial, ajuda e interface do jogo.

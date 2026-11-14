@@ -307,7 +307,9 @@ kbd { padding: 2px 4px; border: 1px solid var(--line); border-radius: 3px; color
 .help-card li strong { color: var(--ink); font-size: 14px; }
 .secondary-button { width: 100%; margin-top: 15px; padding: 12px; }
 
-.credits { position: absolute; z-index: 2; left: 32px; bottom: 18px; max-width: 420px; color: rgba(248,243,231,.34); font-size: 9px; }
+.credits { position: absolute; z-index: 2; left: 32px; bottom: 18px; max-width: 460px; color: rgba(248,243,231,.34); font-size: 9px; }
+.credits p { margin: 0; }
+.credits p + p { margin-top: 3px; }
 .credits a:hover { color: var(--ink); }
 noscript { position: fixed; z-index: 100; inset: 0; display: grid; place-items: center; color: white; background: #11101d; }
 

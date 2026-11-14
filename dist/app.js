@@ -2,6 +2,7 @@ import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { GAME_CONFIG, catCatalog } from "./cats.config.js";
+import { createCatClips } from "./macdonald-clips.js";
 
 const $ = (selector) => document.querySelector(selector);
 const canvas = $("#scene");
@@ -196,6 +197,17 @@ const boneNames = [
   "R_Shoulder_8", "R_Arm_7", "R_Thigh_12", "L_Thigh_15", "Tail_18", "Tail1_17", "Tail2_16",
 ];
 
+function fitModelToHeight(model, height) {
+  const box = new THREE.Box3().setFromObject(model);
+  const size = box.getSize(new THREE.Vector3());
+  model.scale.setScalar(height / Math.max(size.y, 0.001));
+  model.updateMatrixWorld(true);
+  const fitted = new THREE.Box3().setFromObject(model);
+  const center = fitted.getCenter(new THREE.Vector3());
+  model.position.sub(center);
+  model.position.y += (fitted.max.y - fitted.min.y) / 2;
+}
+
 function smoothstep(a, b, value) {
   const t = THREE.MathUtils.clamp((value - a) / (b - a), 0, 1);
   return t * t * (3 - 2 * t);
@@ -206,6 +218,11 @@ function pulse(t, start, peak, end) {
   return t < peak ? smoothstep(start, peak, t) : 1 - smoothstep(peak, end, t);
 }
 
+function lerpAngle(current, target, t) {
+  const delta = Math.atan2(Math.sin(target - current), Math.cos(target - current));
+  return current + delta * t;
+}
+
 class CatActor {
   constructor(profile, gltf) {
     this.profile = profile;
@@ -213,12 +230,21 @@ class CatActor {
     this.pivot = new THREE.Group();
     this.basePosition = new THREE.Vector3(...profile.spawn);
     this.pivot.position.copy(this.basePosition);
+    this.facing = profile.rotationY;
+    this.facingTarget = profile.rotationY;
+    this.placeTarget = null;
+    this.placeFrom = this.basePosition.clone();
+    this.placeFromFacing = this.facing;
+    this.placeT = 1;
+    this.travelLift = 0;
     this.bones = {};
     this.rest = {};
     this.currentAction = profile.actions[0]?.id ?? null;
     this.actionStartedAt = 0;
     this.mixer = gltf.animations.length ? new THREE.AnimationMixer(this.model) : null;
     this.clips = gltf.animations;
+    this.activeClipAction = null;
+    this.resumeIdleAfter = false;
 
     this.model.traverse((child) => {
       child.userData.catActorId = profile.id;
@@ -232,6 +258,11 @@ class CatActor {
       }
       if (child.isBone && boneNames.includes(child.name)) this.bones[child.name] = child;
     });
+
+    if (profile.driver === "root-clips") {
+      this.mountRootClips();
+      return;
+    }
 
     const initialBox = new THREE.Box3().setFromObject(this.model);
     const initialSize = initialBox.getSize(new THREE.Vector3());
@@ -254,6 +285,62 @@ class CatActor {
         scale: this.bones[name].scale.clone(),
       };
     }
+  }
+
+  mountRootClips() {
+    const previousMaterials = [];
+    this.model.traverse((child) => {
+      if (!child.isMesh || !child.material) return;
+      previousMaterials.push(child.material);
+      const map = child.material.map ?? null;
+      if (map) map.colorSpace = THREE.SRGBColorSpace;
+      child.material = new THREE.MeshStandardMaterial({ map, roughness: 0.78, metalness: 0 });
+      child.material.envMapIntensity = 0.65;
+    });
+    previousMaterials.forEach((material) => material.dispose());
+
+    fitModelToHeight(this.model, 1);
+    this.motion = new THREE.Group();
+    this.motion.add(this.model);
+    this.holder = new THREE.Group();
+    this.holder.scale.setScalar(this.profile.targetHeight);
+    this.holder.rotation.y = this.profile.rotationY;
+    this.holder.add(this.motion);
+    this.pivot.add(this.holder);
+    scene.add(this.pivot);
+
+    this.clips = this.profile.clipSet === "macdonald" ? createCatClips() : [];
+    this.mixer = this.clips.length ? new THREE.AnimationMixer(this.motion) : null;
+    this.mixer?.addEventListener("finished", (event) => {
+      if (event.action !== this.activeClipAction || !this.resumeIdleAfter || !this.profile.idleClip) return;
+      this.resumeIdleAfter = false;
+      event.action.stop();
+      this.playClipByName(this.profile.idleClip, { loop: true, resumeIdle: false, fade: 0.25 });
+    });
+    if (this.profile.idleClip) {
+      this.playClipByName(this.profile.idleClip, { loop: true, resumeIdle: false, fade: 0 });
+    }
+  }
+
+  playClipByName(name, { loop = false, hold = true, resumeIdle = false, fade = 0.2 } = {}) {
+    if (!this.mixer || !name) return;
+    const clip = this.clips.find((item) => item.name === name);
+    if (!clip) return;
+    const next = this.mixer.clipAction(clip);
+    const previous = this.activeClipAction;
+    next.reset();
+    next.setLoop(loop ? THREE.LoopRepeat : THREE.LoopOnce, loop ? Infinity : 1);
+    next.clampWhenFinished = !loop && hold;
+    next.enabled = true;
+    next.setEffectiveWeight(1);
+    next.play();
+    if (previous && previous !== next) {
+      previous.paused = false;
+      if (fade > 0) previous.crossFadeTo(next, fade, false);
+      else previous.stop();
+    }
+    this.activeClipAction = next;
+    this.resumeIdleAfter = resumeIdle;
   }
 
   rotateBone(name, x = 0, y = 0, z = 0, weight = 1) {
@@ -283,6 +370,16 @@ class CatActor {
   play(action, elapsed) {
     this.currentAction = action.id;
     this.actionStartedAt = elapsed;
+    if (this.profile.driver === "root-clips") {
+      const actionIndex = this.profile.actions.findIndex((item) => item.id === action.id);
+      const clipName = action.clip || this.clips[actionIndex]?.name;
+      this.playClipByName(clipName, {
+        loop: Boolean(action.loop),
+        hold: action.hold === true,
+        resumeIdle: Boolean(action.resumeIdle),
+      });
+      return;
+    }
     if (this.profile.driver !== "clips" || !this.mixer) return;
     const actionIndex = this.profile.actions.findIndex((item) => item.id === action.id);
     const clip = this.clips.find((item) => item.name === action.clip) || this.clips[actionIndex];
@@ -295,18 +392,70 @@ class CatActor {
     clipAction.fadeIn(0.15).play();
   }
 
+  applyFacing() {
+    if (this.holder) this.holder.rotation.y = this.facing;
+    else this.model.rotation.y = this.facing;
+  }
+
+  destination() {
+    return {
+      position: (this.placeTarget ?? this.basePosition).clone(),
+      facing: this.facingTarget ?? this.facing,
+    };
+  }
+
+  moveTo(position, rotationY) {
+    if (reduceMotion) {
+      this.basePosition.copy(position);
+      this.facing = rotationY;
+      this.facingTarget = rotationY;
+      this.placeTarget = null;
+      this.travelLift = 0;
+      this.pivot.position.copy(this.basePosition);
+      this.applyFacing();
+      return;
+    }
+    this.placeFrom = this.basePosition.clone();
+    this.placeFromFacing = this.facing;
+    this.placeTarget = position.clone();
+    this.facingTarget = rotationY;
+    this.placeT = 0;
+  }
+
+  updatePlacement(delta) {
+    this.travelLift = 0;
+    if (!this.placeTarget) return;
+    this.placeT = Math.min(1, this.placeT + delta / 0.72);
+    const eased = this.placeT * this.placeT * (3 - 2 * this.placeT);
+    this.basePosition.lerpVectors(this.placeFrom, this.placeTarget, eased);
+    this.facing = lerpAngle(this.placeFromFacing, this.facingTarget, eased);
+    this.travelLift = Math.sin(eased * Math.PI) * 0.55;
+    if (this.placeT >= 1) {
+      this.basePosition.copy(this.placeTarget);
+      this.facing = this.facingTarget;
+      this.placeTarget = null;
+      this.travelLift = 0;
+    }
+    this.applyFacing();
+  }
+
   update(elapsed, delta) {
-    if (this.profile.driver === "clips") {
-      this.mixer?.update(delta);
+    this.updatePlacement(delta);
+    if (this.profile.driver === "clips" || this.profile.driver === "root-clips") {
+      this.pivot.position.copy(this.basePosition);
+      this.pivot.position.y += this.travelLift;
+      if (!reduceMotion) this.mixer?.update(delta);
       return;
     }
     this.resetPose();
     const animator = proceduralAnimations[this.currentAction];
     if (animator) animator(this, reduceMotion ? 0 : elapsed - this.actionStartedAt);
+    this.pivot.position.y += this.travelLift;
   }
 
   focusPoint() {
-    return this.basePosition.clone().add(new THREE.Vector3(0, 1.15, 0));
+    const origin = this.placeTarget ?? this.basePosition;
+    return origin.clone().add(new THREE.Vector3(0, 1.15, 0));
   }
 }
 
@@ -457,10 +606,16 @@ function updateSelectedUI() {
 }
 
 function selectActor(actor) {
+  if (selectedActor && selectedActor !== actor) {
+    const stage = selectedActor.destination();
+    const side = actor.destination();
+    actor.moveTo(stage.position, stage.facing);
+    selectedActor.moveTo(side.position, side.facing);
+  }
   selectedActor = actor;
   desiredTarget.copy(actor.focusPoint());
   actionTitle.textContent = actor.profile.name;
-  interactionPrompt.innerHTML = `<span class="prompt-key">1–3</span><span>${actor.profile.name} selecionada • escolha uma ação</span>`;
+  interactionPrompt.innerHTML = `<span class="prompt-key">1–3</span><span>${actor.profile.name} • escolha uma ação</span>`;
   renderActions();
   updateSelectedUI();
 }

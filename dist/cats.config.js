@@ -1,5 +1,6 @@
-// Este é o único arquivo que precisa ser alterado quando os outros gatos chegarem.
 // Cada gato ocupa um dos três slots e oferece exatamente três interações.
+// driver "clips": animações embutidas no GLB.
+// driver "root-clips": o GLB é só o modelo; os clipes de MacDonald estão em macdonald-clips.js.
 
 export const GAME_CONFIG = {
   title: "Café Lunar dos Gatos",
@@ -27,19 +28,21 @@ export const catCatalog = [
   },
   {
     id: "cat-02",
-    name: "Gato 02",
-    guardian: "Amigo 1",
+    name: "Jarbas",
+    guardian: "Rildo",
     asset: "./assets/cat-02.glb",
-    enabled: false,
-    driver: "clips",
+    enabled: true,
+    driver: "root-clips",
+    clipSet: "macdonald",
+    idleClip: "Idle",
     accent: "#8fc9b6",
     spawn: [-2.35, 0.02, 0.4],
     rotationY: 0.45,
-    targetHeight: 1.7,
+    targetHeight: 1.35,
     actions: [
-      { id: "action-1", label: "Interação 1", description: "Primeira animação do gato", icon: "01", clip: "Animation_1" },
-      { id: "action-2", label: "Interação 2", description: "Segunda animação do gato", icon: "02", clip: "Animation_2" },
-      { id: "action-3", label: "Interação 3", description: "Terceira animação do gato", icon: "03", clip: "Animation_3" },
+      { id: "backflip", label: "Cambalhota", description: "Jarbas dá uma cambalhota", icon: "↻", clip: "Backflip", resumeIdle: true },
+      { id: "morto", label: "Fingir de morto", description: "Jarbas se joga e fica no chão", icon: "✕", clip: "Morto", hold: true },
+      { id: "andar", label: "Passear", description: "Jarbas dá uma volta pela sala", icon: "→", clip: "Andar", resumeIdle: true },
     ],
   },
   {
