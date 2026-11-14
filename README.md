@@ -28,39 +28,6 @@ Depois abra `http://localhost:4173`.
 
 Essas animações são procedurais e movimentam diretamente o esqueleto do GLB.
 
-## Adicionar os dois gatos dos amigos
-
-Toda a integração fica centralizada em `dist/cats.config.js`. Já existem três slots: Luna, Gato 02 e Gato 03.
-
-Para adicionar um novo gato:
-
-1. Coloque o modelo em `dist/assets/cat-02.glb` ou `dist/assets/cat-03.glb`.
-2. Abra `dist/cats.config.js`.
-3. Troque `enabled: false` por `enabled: true`.
-4. Atualize nome, responsável, posição e altura.
-5. Informe o nome dos três clipes de animação nos campos `clip`.
-
-Exemplo:
-
-```js
-{
-  id: "cat-02",
-  name: "Mingau",
-  guardian: "Nome do integrante",
-  asset: "./assets/cat-02.glb",
-  enabled: true,
-  driver: "clips",
-  spawn: [-2.35, 0.02, 0.4],
-  actions: [
-    { id: "wave", label: "Cumprimentar", clip: "Wave" },
-    { id: "eat", label: "Dar petisco", clip: "Eat" },
-    { id: "sleep", label: "Descansar", clip: "Sleep" }
-  ]
-}
-```
-
-O motor carrega todos os perfis ativos, cria o seletor de moradores, gera os três botões e atualiza automaticamente o progresso do jogo. Se os nomes dos clipes não coincidirem, ele usa os três primeiros clipes do GLB na ordem.
-
 ## Estrutura
 
 - `dist/index.html`: HUD, tela inicial, ajuda e interface do jogo.
