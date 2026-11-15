@@ -1,6 +1,7 @@
 // Cada gato ocupa um dos três slots e oferece exatamente três interações.
 // driver "clips": animações embutidas no GLB.
 // driver "root-clips": o GLB é só o modelo; os clipes de MacDonald estão em macdonald-clips.js.
+// clipSet "tom": clipes do esqueleto do Tom gerados em cat-tom.js.
 
 export const GAME_CONFIG = {
   title: "Café Lunar dos Gatos",
@@ -47,19 +48,21 @@ export const catCatalog = [
   },
   {
     id: "cat-03",
-    name: "Gato 03",
-    guardian: "Amigo 2",
+    name: "Tom",
+    guardian: "Nathan",
     asset: "./assets/cat-03.glb",
-    enabled: false,
+    enabled: true,
     driver: "clips",
+    clipSet: "tom",
+    idleClip: "TomIdle",
     accent: "#c59ad9",
     spawn: [2.35, 0.02, 0.35],
     rotationY: -0.5,
     targetHeight: 1.7,
     actions: [
-      { id: "action-1", label: "Interação 1", description: "Primeira animação do gato", icon: "01", clip: "Animation_1" },
-      { id: "action-2", label: "Interação 2", description: "Segunda animação do gato", icon: "02", clip: "Animation_2" },
-      { id: "action-3", label: "Interação 3", description: "Terceira animação do gato", icon: "03", clip: "Animation_3" },
+      { id: "dance", label: "Dançar", description: "Tom dança no ritmo e balança os braços", icon: "♫", clip: "TomDance", resumeIdle: true },
+      { id: "wave", label: "Acenar", description: "Tom levanta a patinha e acena para você", icon: "≋", clip: "TomWave", resumeIdle: true },
+      { id: "laugh", label: "Dar risada", description: "Tom cai na gargalhada com as patas na barriga", icon: "☺", clip: "TomLaugh", resumeIdle: true },
     ],
   },
 ];

@@ -3,6 +3,7 @@ import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { GAME_CONFIG, catCatalog } from "./cats.config.js";
 import { createCatClips } from "./macdonald-clips.js";
+import { createTomClips } from "./cat-tom.js";
 
 const $ = (selector) => document.querySelector(selector);
 const canvas = $("#scene");
@@ -285,6 +286,12 @@ class CatActor {
         scale: this.bones[name].scale.clone(),
       };
     }
+
+    if (profile.clipSet === "tom") {
+      this.clips = createTomClips(this.model);
+      this.mixer = new THREE.AnimationMixer(this.model);
+      this.startIdlePlayback();
+    }
   }
 
   mountRootClips() {
@@ -311,6 +318,10 @@ class CatActor {
 
     this.clips = this.profile.clipSet === "macdonald" ? createCatClips() : [];
     this.mixer = this.clips.length ? new THREE.AnimationMixer(this.motion) : null;
+    this.startIdlePlayback();
+  }
+
+  startIdlePlayback() {
     this.mixer?.addEventListener("finished", (event) => {
       if (event.action !== this.activeClipAction || !this.resumeIdleAfter || !this.profile.idleClip) return;
       this.resumeIdleAfter = false;
@@ -319,6 +330,7 @@ class CatActor {
     });
     if (this.profile.idleClip) {
       this.playClipByName(this.profile.idleClip, { loop: true, resumeIdle: false, fade: 0 });
+      this.mixer?.update(0);
     }
   }
 
@@ -370,7 +382,7 @@ class CatActor {
   play(action, elapsed) {
     this.currentAction = action.id;
     this.actionStartedAt = elapsed;
-    if (this.profile.driver === "root-clips") {
+    if (this.profile.driver === "root-clips" || this.profile.clipSet === "tom") {
       const actionIndex = this.profile.actions.findIndex((item) => item.id === action.id);
       const clipName = action.clip || this.clips[actionIndex]?.name;
       this.playClipByName(clipName, {
@@ -724,7 +736,7 @@ async function initializeGame() {
   });
   renderRoster();
   updateProgress();
-  const firstActor = actors.values().next().value;
+  const firstActor = enabledProfiles.map((profile) => actors.get(profile.id)).find(Boolean);
   if (firstActor) {
     selectActor(firstActor);
     startButton.disabled = false;

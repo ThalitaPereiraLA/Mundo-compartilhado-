@@ -32,12 +32,23 @@ Essas animações são procedurais e movimentam diretamente o esqueleto do GLB.
 
 O segundo morador se chama Jarbas e usa o modelo “MacDonald”, de Kasugay (Sketchfab, CC BY 4.0). As animações Idle, Cambalhota, Morto e Passear movem o gato inteiro e ficam em `dist/macdonald-clips.js`. Idle fica em loop; as três interações do slot são Cambalhota, Fingir de morto e Passear.
 
+## Tom
+
+O personagem do Nathan usa `dist/assets/cat-03.glb`. As três interações ficam em `dist/cat-tom.js` e animam o esqueleto do próprio modelo:
+
+- **Dançar:** balança o tronco, a cabeça, os braços e a cauda no ritmo.
+- **Acenar:** levanta uma patinha, inclina a cabeça e acena para o visitante.
+- **Dar risada:** abre a boca, sacode os ombros e leva as patas à barriga.
+
+Ao terminar cada ação, Tom volta à animação de descanso. Ele usa os mesmos cartões, botões, atalhos `1`, `2` e `3` e progresso de amizade dos demais moradores.
+
 ## Estrutura
 
 - `dist/index.html`: HUD, tela inicial, ajuda e interface do jogo.
 - `dist/styles.css`: identidade visual e responsividade.
 - `dist/app.js`: cena 3D, Raycaster, atores, animações e regras do jogo.
 - `dist/cats.config.js`: configuração dos três gatos e de suas ações.
+- `dist/cat-tom.js`: clipes de animação do esqueleto do Tom.
 - `dist/assets/`: modelos GLB.
 
 ## Ambiente
